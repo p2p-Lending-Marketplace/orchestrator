@@ -3,7 +3,9 @@ const { RESTDataSource } = require('apollo-datasource-rest')
 
 const userTypeDef = gql`
   extend type Query {
-    getUserById: User
+    getUserById(id: ID!): User
+    getOTP(phone_number: String!): User
+    signInUser($phone_number: String!, $pin: Int!): User
   }
 
   extend type Mutation {
@@ -11,6 +13,7 @@ const userTypeDef = gql`
       name: String
       email: String
       phone_number: Int
+      pin: Int
       address: String
       photo_url: String
       id_url: String
