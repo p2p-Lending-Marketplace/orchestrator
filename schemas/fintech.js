@@ -2,7 +2,8 @@ const { gql } = require('apollo-server')
 
 const fintechTypeDef = gql`
   extend type Query {
-    getFintech: [Fintech]
+    getAllFintech: [Fintech]
+    getFintechById(id: ID!): Fintech
   }
 
   extend type Mutation {
@@ -26,13 +27,16 @@ const fintechTypeDef = gql`
 
 const fintechResolvers = {
   Query: {
-    getFintech: async (_source, _args, { dataSources }) => {
+    getAllFintech: async (_source, _args, { dataSources }) => {
       return dataSources.fintechAPI.getAllFintech()
+    },
+    getFintechById: async (_source, { id }, { dataSources }) => {
+      return dataSources.fintechAPI.getFintechById(id)
     },
   },
   Mutation: {
-    addNewFintech: async (_source, _args, { dataSources }) => {
-      return dataSources.fintechAPI.addNewFintech()
+    addNewFintech: async (_source, { company_name, description, min_interest, max_interest }, { dataSources }) => {
+      return dataSources.fintechAPI.addNewFintech(company_name, description, min_interest, max_interest)
     },
     updateFintechRates: async (_source, _args, { dataSources }) => {
       return dataSources.fintechAPI.updateFintechRates()

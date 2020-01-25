@@ -10,6 +10,10 @@ class FintechAPI extends RESTDataSource {
     return this.get()
   }
 
+  async getFintechById(id) {
+    return this.get(`/${id}`)
+  }
+
   async addNewFintech(company_name, description, min_interest, max_interest) {
     return this.post(`/`, {
       company_name: company_name,

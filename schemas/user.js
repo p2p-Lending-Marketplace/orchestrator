@@ -23,7 +23,16 @@ const userTypeDef = gql`
       salary: Int
     ): User
 
-    updateUserDetail(id: ID!, phone_number: String): User
+    updateUserDetail(
+      id: ID!
+      pin: Int
+      address: String
+      photo_url: String
+      id_url: String
+      salary_slip_url: String
+      current_job: String
+      salary: Int
+    ): User
   }
 
   type User {
@@ -60,17 +69,14 @@ const userResolvers = {
     },
     signInUser: async (_source, { phone_number, pin }, { dataSources }) => {
       return dataSources.userAPI.signInUser(phone_number, pin)
-    },
-    updateUserDetail: async (_source, { update_type,  }, { dataSources }) => {
-      return dataSources.userAPI.updateUserDetail(phone_number, pin)
     }
   },
   Mutation: {
     addNewUser: async (_source, { name, email, phone_number, pin, address, photo_url, id_url, salary_slip_url, current_job, salary }, { dataSources }) => {
       return dataSources.userAPI.addNewUser(name, email, phone_number, pin, address, photo_url, id_url, salary_slip_url, current_job, salary)
     },
-    updateUserPhoneNumber: async (_source, _args, { dataSources }) => {
-      return dataSources.userAPI.updateUserData()
+    updateUserDetail: async (_source, { id, pin, address, photo_url, id_url, salary_slip_url, current_job, salary }, { dataSources }) => {
+      return dataSources.userAPI.updateUserData(id, pin, address, photo_url, id_url, salary_slip_url, current_job, salary)
     }
   },
 }
