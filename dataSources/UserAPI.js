@@ -10,6 +10,12 @@ class UserAPI extends RESTDataSource {
     return this.get(`/${id}`)
   }
 
+  async getOTP(phone_number) {
+    return this.post(`/otp`, {
+      phoneNumber: phone_number,
+    })
+  }
+
   async addNewUser(
     name,
     email,
