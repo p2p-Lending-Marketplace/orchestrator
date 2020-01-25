@@ -5,6 +5,7 @@ const userTypeDef = gql`
   extend type Query {
     getUserById(id: ID!): User
     getOTP(phone_number: String!): User
+    verifyOTP(OTP: Int!): User
     signInUser($phone_number: String!, $pin: Int!): User
   }
 
@@ -20,6 +21,7 @@ const userTypeDef = gql`
       salary_slip_url: String
       current_job: String
       salary: Int
+      OTP: Int
     ): User
     updateUserPhoneNumber(id: ID, phone_number: Int): User
     updateUserPIN(id: ID, pin: Int, update_type: String): User
@@ -55,6 +57,15 @@ const userResolvers = {
   Query: {
     getUserById: async (_source, { id }, { dataSources }) => {
       return dataSources.userAPI.getUserById(id)
+    },
+    getOTP: async (_source, { phone_number }, { dataSources }) => {
+      return dataSources.userAPI.getOTP(phone_number)
+    },
+    verifyOTP: async (_source, { OTP }, { dataSources }) => {
+      return dataSources.userAPI.verifyOTP(OTP)
+    },
+    signInUser: async (_source, { phone_number, pin }, { dataSources }) => {
+      return dataSources.userAPI.signInUser(phone_number, pin)
     },
   },
   Mutation: {
