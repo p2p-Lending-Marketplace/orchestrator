@@ -5,6 +5,9 @@ const {
   applicationTypeDef,
   applicationResolvers,
 } = require('./schemas/application')
+const UserAPI = require('./dataSources/UserAPI')
+const FintechAPI = require('./dataSources/FintechAPI')
+const ApplicationAPI = require('./dataSources/ApplicationAPI')
 
 const rootTypeDef = gql`
   type Query
@@ -23,6 +26,8 @@ const server = new ApolloServer({
     userAPI: new UserAPI(),
     applicationAPI: new ApplicationAPI(),
   }),
+  introspection: true,
+  playground: true
 })
 
 server.listen().then(({ url }) => console.log('listening to', url))
