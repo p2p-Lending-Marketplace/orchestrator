@@ -1,3 +1,5 @@
+process.env.NODE_ENV === 'development' && require('dotenv').config()
+
 const { ApolloServer, gql, makeExecutableSchema } = require('apollo-server')
 const { userTypeDef, userResolvers } = require('./schemas/user')
 const { fintechTypeDef, fintechResolvers } = require('./schemas/fintech')
@@ -5,6 +7,8 @@ const {
   applicationTypeDef,
   applicationResolvers,
 } = require('./schemas/application')
+const { imageTypeDef, imageResolvers } = require('./schemas/imageUpload')
+const { UserAPI, FintechAPI, ApplicationAPI } = require('./dataSources')
 
 const rootTypeDef = gql`
   type Query
@@ -12,8 +16,19 @@ const rootTypeDef = gql`
 `
 
 const schema = makeExecutableSchema({
-  typeDefs: [rootTypeDef, userTypeDef, fintechTypeDef, applicationTypeDef],
-  resolvers: [userResolvers, fintechResolvers, applicationResolvers],
+  typeDefs: [
+    rootTypeDef,
+    userTypeDef,
+    fintechTypeDef,
+    applicationTypeDef,
+    imageTypeDef,
+  ],
+  resolvers: [
+    userResolvers,
+    fintechResolvers,
+    applicationResolvers,
+    imageResolvers,
+  ],
 })
 
 const server = new ApolloServer({
