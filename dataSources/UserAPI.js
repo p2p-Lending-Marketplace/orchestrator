@@ -15,9 +15,14 @@ class UserAPI extends RESTDataSource {
   }
 
   async getOTP(phone_number) {
-    return this.post(`/otp`, {
-      phoneNumber: phone_number,
-    })
+    try {
+      await this.post(`/otp`, {
+        phoneNumber: phone_number,
+      })
+      return { status: true }
+    } catch (error) {
+      return { status: false }
+    }
   }
 
   async verifyOTP(token, phone_number) {
@@ -68,6 +73,16 @@ class UserAPI extends RESTDataSource {
       current_job,
       salary,
     })
+  }
+  async checkPhoneNumber(
+    phone_number
+  ) {
+    try {
+      await this.post("/user/checkphone", { phone_number })
+      return {status: true}
+    } catch (error) {
+      return {status: false}
+    }
   }
 }
 
