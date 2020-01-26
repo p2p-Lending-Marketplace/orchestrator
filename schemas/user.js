@@ -7,7 +7,7 @@ const userTypeDef = gql`
     getUserById(id: ID!): User
     getOTP(phone_number: String!): User
     verifyOTP(token: String!, phone_number: String!): User
-    signInUser(phone_number: String!, pin: Int!): User
+    signInUser(phone_number: String!, pin: String!): User
     checkPhoneNumber(phone_number: String!) : User
   }
 
@@ -31,10 +31,10 @@ const userTypeDef = gql`
 
   type User {
     id: ID!
-    id_number: Int
+    num_id: String
     name: String
     email: String
-    pin: Int
+    pin: String
     phone_number: String
     address: String
     photo_url: String
@@ -43,6 +43,9 @@ const userTypeDef = gql`
     current_job: String
     salary: Int
     update_type: String
+    date_of_birth: String
+    place_of_birth: String
+
     status: Boolean
   }
 `

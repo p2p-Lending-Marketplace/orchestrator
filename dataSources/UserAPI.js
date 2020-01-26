@@ -40,11 +40,16 @@ class UserAPI extends RESTDataSource {
   }
 
   async signInUser(phone_number, pin) {
-    try {
-      await this.post('signin', {phone_number, pin})
-      return {status: true}
-    } catch (error) {
-      return {status: false}
+    const user = await this.post('signin', {phone_number, pin})
+    if(user){
+      return {
+        ...user,
+        status: true
+      }
+    } else {
+      return {
+        status: false
+      }
     }
   }
 
@@ -78,7 +83,7 @@ class UserAPI extends RESTDataSource {
     phone_number
   ) {
     try {
-      await this.post("/user/checkphone", { phone_number })
+      await this.post('checkphone', { phone_number })
       return {status: true}
     } catch (error) {
       return {status: false}
