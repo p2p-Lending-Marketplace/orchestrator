@@ -6,6 +6,10 @@ class UserAPI extends RESTDataSource {
     this.baseURL = 'http://localhost:3000/user' // update baseURL
   }
 
+  async getAllUsers() {
+    return this.get()
+  }
+
   async getUserById(id) {
     return this.get(`/${id}`)
   }
@@ -16,18 +20,18 @@ class UserAPI extends RESTDataSource {
     })
   }
 
-  async addNewUser(
-    phone_number,
-    pin
-  ) {
+  async addNewUser(phone_number, pin) {
     return this.post(`/`, {
       phone_number: phone_number,
-      pin: pin
+      pin: pin,
     })
   }
 
   async updateUserData(
     id,
+    name,
+    email,
+    phone_number,
     pin,
     address,
     photo_url,
@@ -37,7 +41,9 @@ class UserAPI extends RESTDataSource {
     salary
   ) {
     return this.patch(`/${id}`, {
-      id,
+      name,
+      email,
+      phone_number,
       pin,
       address,
       photo_url,

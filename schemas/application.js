@@ -16,7 +16,7 @@ const applicationTypeDef = gql`
       objective: String!
     ): Application
 
-    updateApplicationDecision(id: ID!, decision: String!): Application
+    updateApplicationDecision(id: ID!, amount: Int!, loan_term: Int, decision: String!): Application
   }
 
   type Application {
@@ -60,7 +60,7 @@ const applicationResolvers = {
         objective
       )
     },
-    updateApplicationDecision: async (_source, _args, { dataSources }) => {
+    updateApplicationDecision: async (_source, {}, { dataSources }) => {
       return dataSources.applicationAPI.updateApplicationDecision()
     },
   },

@@ -3,6 +3,7 @@ const { RESTDataSource } = require('apollo-datasource-rest')
 
 const userTypeDef = gql`
   extend type Query {
+    getAllUsers: [User]
     getUserById(id: ID!): User
     getOTP(phone_number: String!): User
     verifyOTP(OTP: Int!): User
@@ -10,13 +11,13 @@ const userTypeDef = gql`
   }
 
   extend type Mutation {
-    addNewUser(
-      phone_number: Int!,
-      pin: Int!
-    ): User
+    addNewUser(phone_number: Int!, pin: Int!): User
 
     updateUserData(
       id: ID!
+      name: String
+      email: String
+      phone_number: String
       pin: Int
       address: String
       photo_url: String
@@ -45,6 +46,9 @@ const userTypeDef = gql`
 `
 const userResolvers = {
   Query: {
+    getAllUsers: async (_source, _args, { dataSources }) => {
+      return dataSources.userAPI.getAllUsers()
+    },
     getUserById: async (_source, { id }, { dataSources }) => {
       return dataSources.userAPI.getUserById(id)
     },
@@ -66,6 +70,9 @@ const userResolvers = {
       _source,
       {
         id,
+        name,
+        email,
+        phone_number,
         pin,
         address,
         photo_url,
@@ -78,6 +85,9 @@ const userResolvers = {
     ) => {
       return dataSources.userAPI.updateUserData(
         id,
+        name,
+        email,
+        phone_number,
         pin,
         address,
         photo_url,
