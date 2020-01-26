@@ -8,7 +8,12 @@ const {
   applicationResolvers,
 } = require('./schemas/application')
 const { imageTypeDef, imageResolvers } = require('./schemas/imageUpload')
-const { UserAPI, FintechAPI, ApplicationAPI } = require('./dataSources')
+const {
+  UserAPI,
+  FintechAPI,
+  ApplicationAPI,
+  AdminAPI,
+} = require('./dataSources')
 
 const rootTypeDef = gql`
   type Query
@@ -37,6 +42,7 @@ const server = new ApolloServer({
     fintechAPI: new FintechAPI(),
     userAPI: new UserAPI(),
     applicationAPI: new ApplicationAPI(),
+    adminAPI: new AdminAPI(),
   }),
 })
 
