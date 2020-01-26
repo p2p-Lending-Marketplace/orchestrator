@@ -6,7 +6,7 @@ const userTypeDef = gql`
     getUserById(id: ID!): User
     getOTP(phone_number: String!): User
     verifyOTP(OTP: Int!): User
-    signInUser($phone_number: String!, $pin: Int!): User
+    signInUser(phone_number: String!, pin: Int!): User
   }
 
   extend type Mutation {
