@@ -23,8 +23,16 @@ class FintechAPI extends RESTDataSource {
     })
   }
 
-  async updateFintechRates(id, min_interest, max_interest) {
-    return this.patch(`/${id}/rates`, {
+  async updateFintechData(
+    id,
+    company_name,
+    description,
+    min_interest,
+    max_interest
+  ) {
+    return this.patch(`/${id}`, {
+      company_name: company_name,
+      description: description,
       min_interest: min_interest,
       max_interest: max_interest,
     })
