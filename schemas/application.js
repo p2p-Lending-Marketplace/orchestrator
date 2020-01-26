@@ -2,18 +2,21 @@ const { gql } = require('apollo-server')
 
 const applicationTypeDef = gql`
   extend type Query {
-    getAllUserApplication: [Application]
+    getAllApplications: [Application]
+    getAllFintechApplications(fintechID: String!): [Application]
+    getAllUserApplications(userID: String!): [Application]
   }
 
   extend type Mutation {
     addNewApplication(
-      userID: String
-      fintechID: String
-      amount: Int
-      loan_term: Int
-      objective: String
+      userID: String!
+      fintechID: String!
+      amount: Int!
+      loan_term: Int!
+      objective: String!
     ): Application
-    updateApplicationDecision(id: ID, decision: String): Application
+
+    updateApplicationDecision(id: ID!, decision: String!): Application
   }
 
   type Application {
@@ -29,13 +32,33 @@ const applicationTypeDef = gql`
 
 const applicationResolvers = {
   Query: {
-    getAllUserApplication: async (_source, { id }, { dataSources }) => {
-      return dataSources.applicationAPI.getAllUserApplication(id)
+    getAllApplications: async (_source, _args, { dataSources }) => {
+      return dataSources.applicationAPI.getAllApplications()
+    },
+    getAllFintechApplications: async (
+      _source,
+      { fintechID },
+      { dataSources }
+    ) => {
+      return dataSources.applicationAPI.getAllFintechApplications(fintechID)
+    },
+    getAllUserApplications: async (_source, { userID }, { dataSources }) => {
+      return dataSources.applicationAPI.getAllUserApplications(userID)
     },
   },
   Mutation: {
-    addNewApplication: async (_source, _args, { dataSources }) => {
-      return dataSources.applicationAPI.addNewApplication()
+    addNewApplication: async (
+      _source,
+      { userID, fintechID, amount, loan_term, objective },
+      { dataSources }
+    ) => {
+      return dataSources.applicationAPI.addNewApplication(
+        userID,
+        fintechID,
+        amount,
+        loan_term,
+        objective
+      )
     },
     updateApplicationDecision: async (_source, _args, { dataSources }) => {
       return dataSources.applicationAPI.updateApplicationDecision()

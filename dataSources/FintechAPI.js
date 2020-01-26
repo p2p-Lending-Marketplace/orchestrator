@@ -3,10 +3,10 @@ const { RESTDataSource } = require('apollo-datasource-rest')
 class FintechAPI extends RESTDataSource {
   constructor() {
     super()
-    this.baseURL = 'http://localhost:3000' // update baseURL
+    this.baseURL = 'http://localhost:3000/fintech' // update baseURL
   }
 
-  async getAllFintech() {
+  async getAllFinteches() {
     return this.get()
   }
 
