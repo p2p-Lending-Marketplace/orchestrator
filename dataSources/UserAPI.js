@@ -40,9 +40,25 @@ class UserAPI extends RESTDataSource {
     })
   }
 
-  async updateUserData(update_type, data) {
+  async updateUserData(
+    id,
+    pin,
+    address,
+    photo_url,
+    id_url,
+    salary_slip_url,
+    current_job,
+    salary
+  ) {
     return this.patch(`/${id}`, {
-      update_type: data,
+      id,
+      pin,
+      address,
+      photo_url,
+      id_url,
+      salary_slip_url,
+      current_job,
+      salary,
     })
   }
 }
