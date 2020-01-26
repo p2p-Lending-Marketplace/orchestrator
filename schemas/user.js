@@ -6,19 +6,19 @@ const userTypeDef = gql`
     getAllUsers: [User]
     getUserById(id: ID!): User
     getOTP(phone_number: String!): User
-    verifyOTP(OTP: Int!): User
-    signInUser(phone_number: String!, pin: Int!): User
+    verifyOTP(token: String!, phone_number: String!): User
+    signInUser(phone_number: String!, pin: String!): User
   }
 
   extend type Mutation {
-    addNewUser(phone_number: Int!, pin: Int!): User
+    addNewUser(phone_number: String!, pin: String!): User
 
     updateUserData(
       id: ID!
       name: String
       email: String
       phone_number: String
-      pin: Int
+      pin: String
       address: String
       photo_url: String
       id_url: String
@@ -42,6 +42,8 @@ const userTypeDef = gql`
     current_job: String
     salary: Int
     update_type: String
+    timeRemaining: Int
+    status: Boolean
   }
 `
 const userResolvers = {
@@ -55,10 +57,12 @@ const userResolvers = {
     getOTP: async (_source, { phone_number }, { dataSources }) => {
       return dataSources.userAPI.getOTP(phone_number)
     },
-    verifyOTP: async (_source, { OTP }, { dataSources }) => {
-      return dataSources.userAPI.verifyOTP(OTP)
+    verifyOTP: async (_source, { token, phone_number }, { dataSources }) => {
+      return dataSources.userAPI.verifyOTP(token, phone_number)
     },
     signInUser: async (_source, { phone_number, pin }, { dataSources }) => {
+      console.log("Helooooooooooooooooooooooooooooooo")
+      console.log(pin, phone_number)
       return dataSources.userAPI.signInUser(phone_number, pin)
     },
   },

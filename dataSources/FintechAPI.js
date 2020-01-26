@@ -7,19 +7,21 @@ class FintechAPI extends RESTDataSource {
   }
 
   async getAllFinteches() {
-    return this.get()
+    console.log("datasources")
+    return this.get("/")
   }
 
   async getFintechById(id) {
     return this.get(`/${id}`)
   }
 
-  async addNewFintech(company_name, description, min_interest, max_interest) {
+  async addNewFintech(company_name, description, min_interest, max_interest, logoURL) {
     return this.post(`/`, {
       company_name: company_name,
       description: description,
       min_interest: min_interest,
       max_interest: max_interest,
+      logoURL: logoURL
     })
   }
 
