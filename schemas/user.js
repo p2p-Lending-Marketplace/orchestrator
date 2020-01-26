@@ -23,17 +23,16 @@ const userTypeDef = gql`
       salary: Int
       OTP: Int
     ): User
-    updateUserPhoneNumber(id: ID, phone_number: Int): User
-    updateUserPIN(id: ID, pin: Int, update_type: String): User
-    updateUserPhotoURL(id: ID, photo_url: String, update_type: String): User
-    updateUserIDURL(id: ID, id_url: String, update_type: String): User
-    updateUserSalarySlipURL(
-      id: ID
+    updateUserData(
+      id: ID!
+      pin: Int
+      address: String
+      photo_url: String
+      id_url: String
       salary_slip_url: String
-      update_type: String
+      current_job: String
+      salary: Int
     ): User
-    updateUserCurrentJob(id: ID, current_job: String, update_type: String): User
-    updateUserSalaryURL(id: ID, salary: Int, update_type: String): User
   }
 
   type User {
@@ -52,7 +51,6 @@ const userTypeDef = gql`
     update_type: String
   }
 `
-
 const userResolvers = {
   Query: {
     getUserById: async (_source, { id }, { dataSources }) => {
@@ -72,23 +70,30 @@ const userResolvers = {
     addNewUser: async (_source, _args, { dataSources }) => {
       return dataSources.userAPI.addNewUser()
     },
-    updateUserPhoneNumber: async (_source, _args, { dataSources }) => {
-      return dataSources.userAPI.updateUserData()
-    },
-    updateUserPIN: async (_source, _args, { dataSources }) => {
-      return dataSources.userAPI.updateUserData()
-    },
-    updateUserPhotoURL: async (_source, _args, { dataSources }) => {
-      return dataSources.userAPI.updateUserData()
-    },
-    updateUserSalarySlipURL: async (_source, _args, { dataSources }) => {
-      return dataSources.userAPI.updateUserData()
-    },
-    updateUserCurrentJob: async (_source, _args, { dataSources }) => {
-      return dataSources.userAPI.updateUserData()
-    },
-    updateUserSalaryURL: async (_source, _args, { dataSources }) => {
-      return dataSources.userAPI.updateUserData()
+    updateUserData: async (
+      _source,
+      {
+        id,
+        pin,
+        address,
+        photo_url,
+        id_url,
+        salary_slip_url,
+        current_job,
+        salary,
+      },
+      { dataSources }
+    ) => {
+      return dataSources.userAPI.updateUserData(
+        id,
+        pin,
+        address,
+        photo_url,
+        id_url,
+        salary_slip_url,
+        current_job,
+        salary
+      )
     },
   },
 }
