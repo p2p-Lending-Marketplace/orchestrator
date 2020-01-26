@@ -11,18 +11,10 @@ const userTypeDef = gql`
 
   extend type Mutation {
     addNewUser(
-      name: String
-      email: String
-      phone_number: Int
-      pin: Int
-      address: String
-      photo_url: String
-      id_url: String
-      salary_slip_url: String
-      current_job: String
-      salary: Int
-      OTP: Int
+      phone_number: Int!,
+      pin: Int!
     ): User
+
     updateUserData(
       id: ID!
       pin: Int
@@ -41,7 +33,7 @@ const userTypeDef = gql`
     name: String
     email: String
     pin: Int
-    phone_number: Int
+    phone_number: String
     address: String
     photo_url: String
     id_url: String
@@ -67,8 +59,8 @@ const userResolvers = {
     },
   },
   Mutation: {
-    addNewUser: async (_source, _args, { dataSources }) => {
-      return dataSources.userAPI.addNewUser()
+    addNewUser: async (_source, { phone_number, pin }, { dataSources }) => {
+      return dataSources.userAPI.addNewUser(phone_number, pin)
     },
     updateUserData: async (
       _source,

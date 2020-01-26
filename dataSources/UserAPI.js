@@ -17,26 +17,12 @@ class UserAPI extends RESTDataSource {
   }
 
   async addNewUser(
-    name,
-    email,
     phone_number,
-    address,
-    photo_url,
-    id_url,
-    salary_slip_url,
-    current_job,
-    salary
+    pin
   ) {
     return this.post(`/`, {
-      name: name,
-      email: email,
       phone_number: phone_number,
-      address: address,
-      photo_url: photo_url,
-      id_url: id_url,
-      salary_slip_url: salary_slip_url,
-      current_job: current_job,
-      salary: salary,
+      pin: pin
     })
   }
 
