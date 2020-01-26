@@ -8,6 +8,7 @@ const userTypeDef = gql`
     getOTP(phone_number: String!): User
     verifyOTP(token: String!, phone_number: String!): User
     signInUser(phone_number: String!, pin: String!): User
+    checkPhoneNumber(phone_number: String!) : User
   }
 
   extend type Mutation {
@@ -30,10 +31,10 @@ const userTypeDef = gql`
 
   type User {
     id: ID!
-    id_number: Int
+    num_id: String
     name: String
     email: String
-    pin: Int
+    pin: String
     phone_number: String
     address: String
     photo_url: String
@@ -42,7 +43,9 @@ const userTypeDef = gql`
     current_job: String
     salary: Int
     update_type: String
-    timeRemaining: Int
+    date_of_birth: String
+    place_of_birth: String
+
     status: Boolean
   }
 `
@@ -65,6 +68,9 @@ const userResolvers = {
       console.log(pin, phone_number)
       return dataSources.userAPI.signInUser(phone_number, pin)
     },
+    checkPhoneNumber: async (_source, { phone_number }, { dataSources }) => {
+      return dataSources.userAPI.checkPhoneNumber(phone_number)
+    }
   },
   Mutation: {
     addNewUser: async (_source, { phone_number, pin }, { dataSources }) => {
