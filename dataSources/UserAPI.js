@@ -20,11 +20,27 @@ class UserAPI extends RESTDataSource {
     })
   }
 
+  async verifyOTP(token, phone_number) {
+    return this.post(`/verify`, {
+      phoneNumber: phone_number,
+      token
+    })
+  }
+
   async addNewUser(phone_number, pin) {
     return this.post(`/`, {
       phone_number: phone_number,
       pin: pin,
     })
+  }
+
+  async signInUser(phone_number, pin) {
+    try {
+      await this.post('signin', {phone_number, pin})
+      return {status: true}
+    } catch (error) {
+      return {status: false}
+    }
   }
 
   async updateUserData(

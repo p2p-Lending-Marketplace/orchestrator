@@ -12,23 +12,26 @@ const fintechTypeDef = gql`
       description: String
       min_interest: Int
       max_interest: Int
+      logoURL: String
     ): Fintech
 
     updateFintechData(id: ID!, company_name: String, description: String!, min_interest: Int, max_interest: Int): Fintech
   }
 
   type Fintech {
-    id: ID!
+    _id: ID!
     company_name: String
     description: String
     min_interest: Int
     max_interest: Int
+    logoURL: String
   }
 `
 
 const fintechResolvers = {
   Query: {
     getAllFinteches: async (_source, _args, { dataSources }) => {
+      console.log("hello")
       return dataSources.fintechAPI.getAllFinteches()
     },
     getFintechById: async (_source, { id }, { dataSources }) => {
@@ -36,8 +39,9 @@ const fintechResolvers = {
     },
   },
   Mutation: {
-    addNewFintech: async (_source, _args, { dataSources }) => {
-      return dataSources.fintechAPI.addNewFintech()
+    addNewFintech: async (_source, { company_name, description, min_interest, max_interest, logoURL }, { dataSources }) => {
+      console.log(logoURL)
+      return dataSources.fintechAPI.addNewFintech(company_name, description, min_interest, max_interest, logoURL)
     },
     updateFintechData: async (_source, { company_name, description, min_interest, max_interest }, { dataSources }) => {
       return dataSources.fintechAPI.updateFintechData(company_name, description, min_interest, max_interest)
