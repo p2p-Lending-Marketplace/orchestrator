@@ -25,20 +25,21 @@ const imageTypeDef = gql`
 
 const imageResolvers = {
   Mutation: {
-    async singleUpload(_, { file }, { dataSources }) {
-      console.log(file)
-      const { base64 } = file
-
+    async singleUpload(_, { file }) {
+      const { base64, createReadStream } = await file
       let imageURL = null
-      if (base64) {
-        const filename =
-          generateID() + '-' + new Date().toISOString().slice(0, 10)
-        const newFile = bucket.file(filename)
+      const filename =
+        generateID() + '-' + new Date().toISOString().slice(0, 10)
 
+      const newFile = bucket.file(filename)
+
+      if (base64) {
         await new Promise((resolve, reject) => {
           newFile
             .createWriteStream({
-              metadata: { contentType: 'image/jpeg' },
+              metadata: {
+                contentType: 'image/jpeg',
+              },
             })
             .on('error', err => {
               reject(err)
@@ -48,14 +49,25 @@ const imageResolvers = {
             })
             .end(Buffer.from(base64, 'base64'))
         })
-        imageURL = `https://storage.googleapis.com/p2p-lending-marketplace/${filename}`
       } else {
-        console.log('masuk sini')
-        const test = await file
-        console.log(test)
-        imageURL = await dataSources.adminAPI.uploadImage(file)
-        console.log(imageURL)
+        await new Promise((resolve, reject) => {
+          createReadStream().pipe(
+            newFile
+              .createWriteStream({
+                metadata: {
+                  contentType: 'image/jpeg',
+                },
+              })
+              .on('error', err => {
+                reject(err)
+              })
+              .on('finish', () => {
+                resolve()
+              })
+          )
+        })
       }
+      imageURL = `https://storage.googleapis.com/p2p-lending-marketplace/${filename}`
 
       return { imageURL }
     },
