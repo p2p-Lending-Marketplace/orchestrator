@@ -21,6 +21,7 @@ const fintechTypeDef = gql`
       description: String!
       min_interest: Float
       max_interest: Float
+      logoURL: String
     ): Fintech
   }
 
@@ -41,7 +42,9 @@ const fintechResolvers = {
       return dataSources.fintechAPI.getAllFinteches()
     },
     getFintechById: async (_source, { id }, { dataSources }) => {
-      return dataSources.fintechAPI.getFintechById(id)
+      const x = await dataSources.fintechAPI.getFintechById(id)
+      console.log(x)
+      return x
     },
   },
   Mutation: {
@@ -61,14 +64,15 @@ const fintechResolvers = {
     },
     updateFintechData: async (
       _source,
-      { company_name, description, min_interest, max_interest },
+      { company_name, description, min_interest, max_interest, logoURL },
       { dataSources }
     ) => {
       return dataSources.fintechAPI.updateFintechData(
         company_name,
         description,
         min_interest,
-        max_interest
+        max_interest,
+        logoURL
       )
     },
   },
