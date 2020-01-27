@@ -56,20 +56,11 @@ class UserAPI extends RESTDataSource {
   }
 
   async signInUser(phone_number, pin) {
-<<<<<<< HEAD
-    const user = await this.post('signin', { phone_number, pin })
-    if (user) {
-      return {
-        ...user._doc,
-        token: user.token,
-        status: true,
-=======
     const { token } = await this.post('signin', {phone_number, pin})
     if(token){
       return {
         token,
         status: true
->>>>>>> Update result sign in
       }
     } else {
       return {
