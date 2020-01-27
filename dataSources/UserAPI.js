@@ -41,9 +41,11 @@ class UserAPI extends RESTDataSource {
 
   async signInUser(phone_number, pin) {
     const user = await this.post('signin', {phone_number, pin})
+    console.log('user: ', user)
     if(user){
       return {
-        ...user,
+        ...user._doc,
+        token: user.token,
         status: true
       }
     } else {
@@ -56,7 +58,12 @@ class UserAPI extends RESTDataSource {
   async updateUserData(data
   ) {
     return this.patch(`/${data.id}`, 
-      data
+      data,
+      {
+        headers: {
+          "token": data.token
+        }
+      }
     )
   }
   async checkPhoneNumber(
