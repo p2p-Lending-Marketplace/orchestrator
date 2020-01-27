@@ -25,12 +25,15 @@ const userTypeDef = gql`
       id_url: String
       salary_slip_url: String
       current_job: String
-      salary: Int
+      salary: String,
+      num_id: String,
+      date_of_birth: String,
+      place_of_birth: String
     ): User
   }
 
   type User {
-    id: ID!
+    _id: ID!
     num_id: String
     name: String
     email: String
@@ -45,7 +48,7 @@ const userTypeDef = gql`
     update_type: String
     date_of_birth: String
     place_of_birth: String
-
+    data_completed: Boolean
     status: Boolean
   }
 `
@@ -64,8 +67,6 @@ const userResolvers = {
       return dataSources.userAPI.verifyOTP(token, phone_number)
     },
     signInUser: async (_source, { phone_number, pin }, { dataSources }) => {
-      console.log("Helooooooooooooooooooooooooooooooo")
-      console.log(pin, phone_number)
       return dataSources.userAPI.signInUser(phone_number, pin)
     },
     checkPhoneNumber: async (_source, { phone_number }, { dataSources }) => {
@@ -77,34 +78,10 @@ const userResolvers = {
       return dataSources.userAPI.addNewUser(phone_number, pin)
     },
     updateUserData: async (
-      _source,
-      {
-        id,
-        name,
-        email,
-        phone_number,
-        pin,
-        address,
-        photo_url,
-        id_url,
-        salary_slip_url,
-        current_job,
-        salary,
-      },
+      _source,data,
       { dataSources }
     ) => {
-      return dataSources.userAPI.updateUserData(
-        id,
-        name,
-        email,
-        phone_number,
-        pin,
-        address,
-        photo_url,
-        id_url,
-        salary_slip_url,
-        current_job,
-        salary
+      return dataSources.userAPI.updateUserData(data
       )
     },
   },
