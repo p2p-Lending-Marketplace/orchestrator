@@ -41,7 +41,6 @@ class UserAPI extends RESTDataSource {
 
   async signInUser(phone_number, pin) {
     const user = await this.post('signin', {phone_number, pin})
-    console.log('user: ', user)
     if(user){
       return {
         ...user._doc,

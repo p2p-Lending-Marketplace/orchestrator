@@ -4,7 +4,7 @@ const applicationTypeDef = gql`
   extend type Query {
     getAllApplications: [Application]
     getAllFintechApplications(fintechID: String!): [Application]
-    getAllUserApplications(userID: String!): [Application]
+    getAllUserApplications(userID: ID!, token: String!): [Application]
   }
 
   extend type Mutation {
@@ -22,12 +22,16 @@ const applicationTypeDef = gql`
 
   type Application {
     _id: ID!
-    userID: ID!
-    fintechID: ID!
+    user_id: ID!
+    fintech_id: ID!
     amount: Int
+    logoURL: String!
+    company_name: String
     loan_term: Int
     objective: String
     decision: String
+    createdAt: String
+    status: String
   }
 `
 
@@ -43,8 +47,8 @@ const applicationResolvers = {
     ) => {
       return dataSources.applicationAPI.getAllFintechApplications(fintechID)
     },
-    getAllUserApplications: async (_source, { userID }, { dataSources }) => {
-      return dataSources.applicationAPI.getAllUserApplications(userID)
+    getAllUserApplications: async (_source, { userID, token }, { dataSources }) => {
+      return dataSources.applicationAPI.getAllUserApplications(userID, token)
     },
   },
   Mutation: {
