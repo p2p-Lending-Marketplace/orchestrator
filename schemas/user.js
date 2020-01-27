@@ -8,7 +8,7 @@ const userTypeDef = gql`
     getOTP(phone_number: String!): User
     verifyOTP(token: String!, phone_number: String!): User
     signInUser(phone_number: String!, pin: String!): User
-    checkPhoneNumber(phone_number: String!) : User
+    checkPhoneNumber(phone_number: String!): User
   }
 
   extend type Mutation {
@@ -25,16 +25,18 @@ const userTypeDef = gql`
       id_url: String
       salary_slip_url: String
       current_job: String
-      salary: Int,
-      num_id: String,
-      date_of_birth: String,
-      place_of_birth: String,
+      salary: Int
+      num_id: String
+      date_of_birth: String
+      place_of_birth: String
       token: String
     ): User
+
+    registerPushNotification(token: String!, phone_number: String!): User
   }
 
   type User {
-    _id: ID!
+    _id: ID
     token: String
     num_id: String
     name: String
@@ -68,23 +70,26 @@ const userResolvers = {
     verifyOTP: async (_source, { token, phone_number }, { dataSources }) => {
       return dataSources.userAPI.verifyOTP(token, phone_number)
     },
-    signInUser: async (_source, { phone_number, pin }, { req, dataSources }) => {
+    signInUser: async (
+      _source,
+      { phone_number, pin },
+      { req, dataSources }
+    ) => {
       return dataSources.userAPI.signInUser(phone_number, pin)
     },
     checkPhoneNumber: async (_source, { phone_number }, { dataSources }) => {
       return dataSources.userAPI.checkPhoneNumber(phone_number)
-    }
+    },
   },
   Mutation: {
     addNewUser: async (_source, { phone_number, pin }, { dataSources }) => {
       return dataSources.userAPI.addNewUser(phone_number, pin)
     },
-    updateUserData: async (
-      _source,data,
-      { dataSources }
-    ) => {
-      return dataSources.userAPI.updateUserData(data
-      )
+    updateUserData: async (_source, data, { dataSources }) => {
+      return dataSources.userAPI.updateUserData(data)
+    },
+    registerPushNotification: async (_, args, { dataSources }) => {
+      return dataSources.userAPI.registerPushNotification(args)
     },
   },
 }

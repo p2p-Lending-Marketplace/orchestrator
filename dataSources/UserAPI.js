@@ -6,6 +6,18 @@ class UserAPI extends RESTDataSource {
     this.baseURL = 'http://localhost:3000/user' // update baseURL
   }
 
+  async registerPushNotification(data) {
+    // setTimeout(() => {
+    //   this.post('sendpush', {
+    //     phone_number: data.phone_number,
+    //     title: 'Welcome',
+    //     sound: 'default',
+    //     body: 'welcome to this app!',
+    //   })
+    // }, 10 * 1000)
+    return this.post('registerpush', data)
+  }
+
   async getAllUsers() {
     return this.get()
   }
@@ -28,7 +40,7 @@ class UserAPI extends RESTDataSource {
   async verifyOTP(token, phone_number) {
     return this.post(`/verify`, {
       phoneNumber: phone_number,
-      token
+      token,
     })
   }
 
@@ -40,39 +52,33 @@ class UserAPI extends RESTDataSource {
   }
 
   async signInUser(phone_number, pin) {
-    const user = await this.post('signin', {phone_number, pin})
-    if(user){
+    const user = await this.post('signin', { phone_number, pin })
+    if (user) {
       return {
         ...user._doc,
         token: user.token,
-        status: true
+        status: true,
       }
     } else {
       return {
-        status: false
+        status: false,
       }
     }
   }
 
-  async updateUserData(data
-  ) {
-    return this.patch(`/${data.id}`, 
-      data,
-      {
-        headers: {
-          "token": data.token
-        }
-      }
-    )
+  async updateUserData(data) {
+    return this.patch(`/${data.id}`, data, {
+      headers: {
+        token: data.token,
+      },
+    })
   }
-  async checkPhoneNumber(
-    phone_number
-  ) {
+  async checkPhoneNumber(phone_number) {
     try {
       await this.post('checkphone', { phone_number })
-      return {status: true}
+      return { status: true }
     } catch (error) {
-      return {status: false}
+      return { status: false }
     }
   }
 }
