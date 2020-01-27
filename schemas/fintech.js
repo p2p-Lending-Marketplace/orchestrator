@@ -10,20 +10,26 @@ const fintechTypeDef = gql`
     addNewFintech(
       company_name: String
       description: String
-      min_interest: Int
-      max_interest: Int
+      min_interest: Float
+      max_interest: Float
       logoURL: String
     ): Fintech
 
-    updateFintechData(id: ID!, company_name: String, description: String!, min_interest: Int, max_interest: Int): Fintech
+    updateFintechData(
+      id: ID!
+      company_name: String
+      description: String!
+      min_interest: Float
+      max_interest: Float
+    ): Fintech
   }
 
   type Fintech {
     _id: ID!
     company_name: String
     description: String
-    min_interest: Int
-    max_interest: Int
+    min_interest: Float
+    max_interest: Float
     logoURL: String
   }
 `
@@ -31,7 +37,7 @@ const fintechTypeDef = gql`
 const fintechResolvers = {
   Query: {
     getAllFinteches: async (_source, _args, { dataSources }) => {
-      console.log("hello")
+      console.log('hello')
       return dataSources.fintechAPI.getAllFinteches()
     },
     getFintechById: async (_source, { id }, { dataSources }) => {
@@ -39,12 +45,31 @@ const fintechResolvers = {
     },
   },
   Mutation: {
-    addNewFintech: async (_source, { company_name, description, min_interest, max_interest, logoURL }, { dataSources }) => {
+    addNewFintech: async (
+      _source,
+      { company_name, description, min_interest, max_interest, logoURL },
+      { dataSources }
+    ) => {
       console.log(logoURL)
-      return dataSources.fintechAPI.addNewFintech(company_name, description, min_interest, max_interest, logoURL)
+      return dataSources.fintechAPI.addNewFintech(
+        company_name,
+        description,
+        min_interest,
+        max_interest,
+        logoURL
+      )
     },
-    updateFintechData: async (_source, { company_name, description, min_interest, max_interest }, { dataSources }) => {
-      return dataSources.fintechAPI.updateFintechData(company_name, description, min_interest, max_interest)
+    updateFintechData: async (
+      _source,
+      { company_name, description, min_interest, max_interest },
+      { dataSources }
+    ) => {
+      return dataSources.fintechAPI.updateFintechData(
+        company_name,
+        description,
+        min_interest,
+        max_interest
+      )
     },
   },
 }
