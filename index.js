@@ -8,6 +8,7 @@ const {
   applicationResolvers,
 } = require('./schemas/application')
 const { imageTypeDef, imageResolvers } = require('./schemas/imageUpload')
+const { adminTypeDef, adminResolvers } = require('./schemas/admin')
 const {
   UserAPI,
   FintechAPI,
@@ -27,12 +28,14 @@ const schema = makeExecutableSchema({
     fintechTypeDef,
     applicationTypeDef,
     imageTypeDef,
+    adminTypeDef,
   ],
   resolvers: [
     userResolvers,
     fintechResolvers,
     applicationResolvers,
     imageResolvers,
+    adminResolvers,
   ],
 })
 

@@ -1,5 +1,4 @@
 const { gql } = require('apollo-server')
-const { RESTDataSource } = require('apollo-datasource-rest')
 
 const userTypeDef = gql`
   extend type Query {
