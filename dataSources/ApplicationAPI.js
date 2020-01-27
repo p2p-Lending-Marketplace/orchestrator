@@ -10,19 +10,28 @@ class ApplicationAPI extends RESTDataSource {
     return this.get(`/`)
   }
 
-  async getAllFintechApplications(fintechID) {
-    return this.get(`/fintech/${fintechID}`)
-  }
-
-  async getAllUserApplications(userID, token) {
-    return this.get(`/user/${userID}`,null,{
-      headers: {
-        token: token
-      }
+  async getAllFintechApplications({ fintechID, token }) {
+    return this.get(`/fintech/${fintechID}`, null, {
+      headers: { token },
     })
   }
 
-  async addNewApplication(userID, fintechID, amount, loan_term, objective, token) {
+  async getAllUserApplications(userID, token) {
+    return this.get(`/user/${userID}`, null, {
+      headers: {
+        token: token,
+      },
+    })
+  }
+
+  async addNewApplication(
+    userID,
+    fintechID,
+    amount,
+    loan_term,
+    objective,
+    token
+  ) {
     return this.post(
       `/`,
       {

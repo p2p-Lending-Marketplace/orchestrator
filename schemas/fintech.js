@@ -57,56 +57,11 @@ const fintechResolvers = {
     },
   },
   Mutation: {
-    addNewFintech: async (
-      _source,
-      {
-        token,
-        username,
-        password,
-        company_name,
-        description,
-        min_interest,
-        max_interest,
-        logoURL,
-      },
-      { dataSources }
-    ) => {
-      console.log(logoURL)
-      return dataSources.fintechAPI.addNewFintech(
-        token,
-        username,
-        password,
-        company_name,
-        description,
-        min_interest,
-        max_interest,
-        logoURL
-      )
+    addNewFintech: async (_source, args, { dataSources }) => {
+      return dataSources.fintechAPI.addNewFintech(args)
     },
-    updateFintechData: async (
-      _source,
-      {
-        token,
-        username,
-        password,
-        company_name,
-        description,
-        min_interest,
-        max_interest,
-        logoURL,
-      },
-      { dataSources }
-    ) => {
-      return dataSources.fintechAPI.updateFintechData(
-        token,
-        username,
-        password,
-        company_name,
-        description,
-        min_interest,
-        max_interest,
-        logoURL
-      )
+    updateFintechData: async (_source, args, { dataSources }) => {
+      return dataSources.fintechAPI.updateFintechData(args)
     },
   },
 }
