@@ -14,6 +14,7 @@ const applicationTypeDef = gql`
       amount: Int!
       loan_term: Int!
       objective: String!
+      token: String!
     ): Application
 
     updateApplicationDecision(id: ID!, amount: Int!, loan_term: Int, decision: String!): Application
@@ -49,7 +50,7 @@ const applicationResolvers = {
   Mutation: {
     addNewApplication: async (
       _source,
-      { userID, fintechID, amount, loan_term, objective },
+      { userID, fintechID, amount, loan_term, objective, token },
       { dataSources }
     ) => {
       return dataSources.applicationAPI.addNewApplication(
@@ -57,7 +58,8 @@ const applicationResolvers = {
         fintechID,
         amount,
         loan_term,
-        objective
+        objective,
+        token
       )
     },
     updateApplicationDecision: async (_source, {}, { dataSources }) => {

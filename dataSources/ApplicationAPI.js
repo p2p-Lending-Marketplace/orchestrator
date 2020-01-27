@@ -18,14 +18,23 @@ class ApplicationAPI extends RESTDataSource {
     return this.get(`/user/${userID}`)
   }
 
-  async addNewApplication(userID, fintechID, amount, loan_term, objective) {
-    return this.post(`/`, {
-      user_id: userID,
-      fintech_id: fintechID,
-      amount: amount,
-      loan_term: loan_term,
-      objective: objective,
-    })
+  async addNewApplication(userID, fintechID, amount, loan_term, objective, token) {
+    console.log(token)
+    return this.post(
+      `/`,
+      {
+        user_id: userID,
+        fintech_id: fintechID,
+        amount: amount,
+        loan_term: loan_term,
+        objective: objective,
+      },
+      {
+        headers: {
+          token: token,
+        },
+      }
+    )
   }
 
   async updateApplicationDecision(id, decision) {
