@@ -1,7 +1,11 @@
 const { gql } = require('apollo-server')
 
 const adminTypeDef = gql`
-  extend type Query {
+  # extend type Query {
+  #   loginAdmin(username: String!, password: String!): Admin
+  # }
+
+  extend type Mutation {
     loginAdmin(username: String!, password: String!): Admin
   }
 
@@ -15,9 +19,14 @@ const adminTypeDef = gql`
 `
 
 const adminResolvers = {
-  Query: {
-    loginAdmin: async (_, args, { dataSources }) => {
-      return dataSources.adminAPI.loginAdmin(args)
+  // Query: {
+  //   loginAdmin: async (_, args, { dataSources }) => {
+  //     return dataSources.adminAPI.loginAdmin(args)
+  //   },
+  // },
+  Mutation: {
+    loginAdmin: async (_source, { username, password }, { dataSources }) => {
+      return dataSources.adminAPI.loginAdmin(username, password)
     },
   },
 }
