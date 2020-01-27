@@ -8,6 +8,9 @@ const fintechTypeDef = gql`
 
   extend type Mutation {
     addNewFintech(
+      token: String
+      username: String
+      password: String
       company_name: String
       description: String
       min_interest: Float
@@ -17,6 +20,9 @@ const fintechTypeDef = gql`
 
     updateFintechData(
       id: ID!
+      token: String
+      username: String
+      password: String
       company_name: String
       description: String!
       min_interest: Float
@@ -27,6 +33,9 @@ const fintechTypeDef = gql`
 
   type Fintech {
     _id: ID!
+    token: String
+    username: String
+    password: String
     company_name: String
     description: String
     min_interest: Float
@@ -48,32 +57,11 @@ const fintechResolvers = {
     },
   },
   Mutation: {
-    addNewFintech: async (
-      _source,
-      { company_name, description, min_interest, max_interest, logoURL },
-      { dataSources }
-    ) => {
-      console.log(logoURL)
-      return dataSources.fintechAPI.addNewFintech(
-        company_name,
-        description,
-        min_interest,
-        max_interest,
-        logoURL
-      )
+    addNewFintech: async (_source, args, { dataSources }) => {
+      return dataSources.fintechAPI.addNewFintech(args)
     },
-    updateFintechData: async (
-      _source,
-      { company_name, description, min_interest, max_interest, logoURL },
-      { dataSources }
-    ) => {
-      return dataSources.fintechAPI.updateFintechData(
-        company_name,
-        description,
-        min_interest,
-        max_interest,
-        logoURL
-      )
+    updateFintechData: async (_source, args, { dataSources }) => {
+      return dataSources.fintechAPI.updateFintechData(args)
     },
   },
 }

@@ -15,37 +15,55 @@ class FintechAPI extends RESTDataSource {
     return this.get(`/${id}`)
   }
 
-  async addNewFintech(
+  async addNewFintech({
+    token,
+    username,
+    password,
     company_name,
     description,
     min_interest,
     max_interest,
-    logoURL
-  ) {
-    return this.post(`/`, {
-      company_name: company_name,
-      description: description,
-      min_interest: min_interest,
-      max_interest: max_interest,
-      logoURL: logoURL,
-    })
+    logoURL,
+  }) {
+    return this.post(
+      `/`,
+      {
+        company_name: company_name,
+        description: description,
+        min_interest: min_interest,
+        max_interest: max_interest,
+        logoURL: logoURL,
+        username,
+        password,
+      },
+      { headers: { token } }
+    )
   }
 
-  async updateFintechData(
+  async updateFintechData({
+    token,
+    username,
+    password,
     id,
     company_name,
     description,
     min_interest,
     max_interest,
-    logoURL
-  ) {
-    return this.patch(`/${id}`, {
-      company_name: company_name,
-      description: description,
-      min_interest: min_interest,
-      max_interest: max_interest,
-      logoURL: logoURL,
-    })
+    logoURL,
+  }) {
+    return this.patch(
+      `/${id}`,
+      {
+        company_name: company_name,
+        description: description,
+        min_interest: min_interest,
+        max_interest: max_interest,
+        logoURL: logoURL,
+        username,
+        password,
+      },
+      { headers: { token } }
+    )
   }
 }
 

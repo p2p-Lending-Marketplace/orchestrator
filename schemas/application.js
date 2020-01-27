@@ -3,7 +3,7 @@ const { gql } = require('apollo-server')
 const applicationTypeDef = gql`
   extend type Query {
     getAllApplications: [Application]
-    getAllFintechApplications(fintechID: String!): [Application]
+    getAllFintechApplications(fintechID: String!, token: String!): [Application]
     getAllUserApplications(userID: ID!, token: String!): [Application]
   }
 
@@ -17,7 +17,12 @@ const applicationTypeDef = gql`
       token: String!
     ): Application
 
-    updateApplicationDecision(id: ID!, amount: Int!, loan_term: Int, decision: String!): Application
+    updateApplicationDecision(
+      id: ID!
+      amount: Int!
+      loan_term: Int
+      decision: String!
+    ): Application
   }
 
   type Application {
@@ -40,14 +45,14 @@ const applicationResolvers = {
     getAllApplications: async (_source, _args, { dataSources }) => {
       return dataSources.applicationAPI.getAllApplications()
     },
-    getAllFintechApplications: async (
+    getAllFintechApplications: async (_source, args, { dataSources }) => {
+      return dataSources.applicationAPI.getAllFintechApplications(args)
+    },
+    getAllUserApplications: async (
       _source,
-      { fintechID },
+      { userID, token },
       { dataSources }
     ) => {
-      return dataSources.applicationAPI.getAllFintechApplications(fintechID)
-    },
-    getAllUserApplications: async (_source, { userID, token }, { dataSources }) => {
       return dataSources.applicationAPI.getAllUserApplications(userID, token)
     },
   },
