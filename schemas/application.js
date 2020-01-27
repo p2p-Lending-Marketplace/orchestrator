@@ -9,8 +9,8 @@ const applicationTypeDef = gql`
 
   extend type Mutation {
     addNewApplication(
-      userID: String!
-      fintechID: String!
+      userID: ID!
+      fintechID: ID!
       amount: Int!
       loan_term: Int!
       objective: String!
@@ -20,9 +20,9 @@ const applicationTypeDef = gql`
   }
 
   type Application {
-    id: ID!
-    userID: String
-    fintechID: String
+    _id: ID!
+    userID: ID!
+    fintechID: ID!
     amount: Int
     loan_term: Int
     objective: String
