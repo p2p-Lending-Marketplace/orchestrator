@@ -19,6 +19,7 @@ const applicationTypeDef = gql`
     ): Application
 
     updateApplicationDecision(
+      token: String
       id: ID!
       amount: Int
       loan_term: Int

@@ -45,19 +45,27 @@ class ApplicationAPI extends RESTDataSource {
     )
   }
 
-  async updateApplicationDecision({ id, amount, loan_term, decision }) {
-    const application = await this.patch(`/${id}`, {
-      amount,
-      loan_term,
-      decision,
-    })
+  async updateApplicationDecision({ token, id, amount, loan_term, decision }) {
+    const application = await this.patch(
+      `/${id}/decision`,
+      {
+        amount,
+        loan_term,
+        decision,
+      },
+      { headers: { token } }
+    )
     console.log(application)
 
-    await this.post('/sendpush', {
-      _id: application.user_id,
-      title: "Application's updated",
-      body: "Your application's decision has been updated! Review now!",
-    })
+    await this.post(
+      '/sendpush',
+      {
+        _id: application.user_id,
+        title: "Application's updated",
+        body: "Your application's decision has been updated! Review now!",
+      },
+      { headers: { token } }
+    )
     return application
   }
 }
