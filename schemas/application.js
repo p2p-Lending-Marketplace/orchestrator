@@ -4,12 +4,13 @@ const applicationTypeDef = gql`
   extend type Query {
     getAllApplications: [Application]
     getAllFintechApplications(fintechID: String!, token: String!): [Application]
-    getAllUserApplications(userID: ID!, token: String!): [Application]
+    getAllUserApplications(userID: ID, token: String!): [Application]
+    getOneApplication(id: ID, token: String!): Application
   }
 
   extend type Mutation {
     addNewApplication(
-      userID: ID!
+      # userID: ID
       fintechID: ID!
       amount: Int!
       loan_term: Int!
@@ -18,16 +19,17 @@ const applicationTypeDef = gql`
     ): Application
 
     updateApplicationDecision(
+      token: String
       id: ID!
-      amount: Int!
+      amount: Int
       loan_term: Int
-      decision: String!
+      decision: String
     ): Application
   }
 
   type Application {
     _id: ID!
-    user_id: ID!
+    user_id: User
     fintech_id: ID!
     amount: Int
     logoURL: String!
@@ -48,31 +50,20 @@ const applicationResolvers = {
     getAllFintechApplications: async (_source, args, { dataSources }) => {
       return dataSources.applicationAPI.getAllFintechApplications(args)
     },
-    getAllUserApplications: async (
-      _source,
-      { userID, token },
-      { dataSources }
-    ) => {
-      return dataSources.applicationAPI.getAllUserApplications(userID, token)
+    getAllUserApplications: async (_source, args, { dataSources }) => {
+      return dataSources.applicationAPI.getAllUserApplications(args)
+    },
+    getOneApplication: async (_, args, { dataSources }) => {
+      return dataSources.applicationAPI.getOneApplication(args)
     },
   },
   Mutation: {
-    addNewApplication: async (
-      _source,
-      { userID, fintechID, amount, loan_term, objective, token },
-      { dataSources }
-    ) => {
-      return dataSources.applicationAPI.addNewApplication(
-        userID,
-        fintechID,
-        amount,
-        loan_term,
-        objective,
-        token
-      )
+    addNewApplication: async (_source, args, { dataSources }) => {
+      return dataSources.applicationAPI.addNewApplication(args)
     },
-    updateApplicationDecision: async (_source, {}, { dataSources }) => {
-      return dataSources.applicationAPI.updateApplicationDecision()
+    updateApplicationDecision: async (_source, args, { dataSources }) => {
+      console.log('testttttt')
+      return dataSources.applicationAPI.updateApplicationDecision(args)
     },
   },
 }

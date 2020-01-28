@@ -71,12 +71,8 @@ const userResolvers = {
     verifyOTP: async (_source, { token, phone_number }, { dataSources }) => {
       return dataSources.userAPI.verifyOTP(token, phone_number)
     },
-    signInUser: async (
-      _source,
-      { phone_number, pin },
-      { req, dataSources }
-    ) => {
-      return dataSources.userAPI.signInUser(phone_number, pin)
+    signInUser: async (_source, args, { dataSources }) => {
+      return dataSources.userAPI.signInUser(args)
     },
     checkPhoneNumber: async (_source, { phone_number }, { dataSources }) => {
       return dataSources.userAPI.checkPhoneNumber(phone_number)
