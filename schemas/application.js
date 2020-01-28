@@ -71,8 +71,8 @@ const applicationResolvers = {
         token
       )
     },
-    updateApplicationDecision: async (_source, {}, { dataSources }) => {
-      return dataSources.applicationAPI.updateApplicationDecision()
+    updateApplicationDecision: async (_source, args, { dataSources }) => {
+      return dataSources.applicationAPI.updateApplicationDecision(args)
     },
   },
 }
