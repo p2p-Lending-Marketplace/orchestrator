@@ -62,7 +62,7 @@ class UserAPI extends RESTDataSource {
     })
   }
 
-  async signInUser(phone_number, pin) {
+  async signInUser({ phone_number, pin }) {
     const { token } = await this.post('signin', { phone_number, pin })
     if (token) {
       return {
@@ -96,8 +96,8 @@ class UserAPI extends RESTDataSource {
   async getUserScoring(token) {
     return this.get('/scoring', null, {
       headers: {
-        token
-      }
+        token,
+      },
     })
   }
 }

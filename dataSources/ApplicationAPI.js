@@ -6,6 +6,10 @@ class ApplicationAPI extends RESTDataSource {
     this.baseURL = 'http://localhost:3000/application' // update baseURL
   }
 
+  async getOneApplication({ id, token }) {
+    return this.get(`${id}`, null, { headers: { token } })
+  }
+
   async getAllApplications() {
     return this.get(`/`)
   }
@@ -16,26 +20,18 @@ class ApplicationAPI extends RESTDataSource {
     })
   }
 
-  async getAllUserApplications(userID, token) {
-    return this.get(`/user/${userID}`, null, {
+  async getAllUserApplications({ token }) {
+    return this.get(`user`, null, {
       headers: {
-        token: token,
+        token,
       },
     })
   }
 
-  async addNewApplication(
-    userID,
-    fintechID,
-    amount,
-    loan_term,
-    objective,
-    token
-  ) {
+  async addNewApplication({ fintechID, amount, loan_term, objective, token }) {
     return this.post(
       `/`,
       {
-        user_id: userID,
         fintech_id: fintechID,
         amount: amount,
         loan_term: loan_term,
