@@ -91,6 +91,14 @@ class UserAPI extends RESTDataSource {
       return { status: false }
     }
   }
+
+  async getUserScoring(token) {
+    return this.get('/scoring', null, {
+      headers: {
+        token
+      }
+    })
+  }
 }
 
 module.exports = UserAPI

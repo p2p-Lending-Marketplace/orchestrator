@@ -8,6 +8,7 @@ const userTypeDef = gql`
     verifyOTP(token: String!, phone_number: String!): User
     signInUser(phone_number: String!, pin: String!): User
     checkPhoneNumber(phone_number: String!): User
+    getUserScoring(token: String!): User
   }
 
   extend type Mutation {
@@ -53,6 +54,7 @@ const userTypeDef = gql`
     place_of_birth: String
     data_completed: Boolean
     status: Boolean
+    score: String
   }
 `
 const userResolvers = {
@@ -78,6 +80,9 @@ const userResolvers = {
     },
     checkPhoneNumber: async (_source, { phone_number }, { dataSources }) => {
       return dataSources.userAPI.checkPhoneNumber(phone_number)
+    },
+    getUserScoring: async (_source, { token }, { dataSources }) => {
+      return dataSources.userAPI.getUserScoring(token)
     },
   },
   Mutation: {
