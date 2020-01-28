@@ -22,11 +22,18 @@ class UserAPI extends RESTDataSource {
     return this.get()
   }
 
-  async getUserById(token) {
-    return this.get(`/detail`,null, {
+  async getUserById({ token, id }) {
+    if (id) {
+      return this.get(`/${id}`, null, {
+        headers: {
+          token,
+        },
+      })
+    }
+    return this.get(`/detail`, null, {
       headers: {
-        token
-      }
+        token,
+      },
     })
   }
 
@@ -56,11 +63,11 @@ class UserAPI extends RESTDataSource {
   }
 
   async signInUser(phone_number, pin) {
-    const { token } = await this.post('signin', {phone_number, pin})
-    if(token){
+    const { token } = await this.post('signin', { phone_number, pin })
+    if (token) {
       return {
         token,
-        status: true
+        status: true,
       }
     } else {
       return {

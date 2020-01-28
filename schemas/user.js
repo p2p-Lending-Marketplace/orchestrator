@@ -3,7 +3,7 @@ const { gql } = require('apollo-server')
 const userTypeDef = gql`
   extend type Query {
     getAllUsers: [User]
-    getUserById(token: String!): User
+    getUserById(token: String!, id: ID): User
     getOTP(phone_number: String!): User
     verifyOTP(token: String!, phone_number: String!): User
     signInUser(phone_number: String!, pin: String!): User
@@ -60,8 +60,8 @@ const userResolvers = {
     getAllUsers: async (_source, _args, { dataSources }) => {
       return dataSources.userAPI.getAllUsers()
     },
-    getUserById: async (_source, { token }, { dataSources }) => {
-      return dataSources.userAPI.getUserById(token)
+    getUserById: async (_source, args, { dataSources }) => {
+      return dataSources.userAPI.getUserById(args)
     },
     getOTP: async (_source, { phone_number }, { dataSources }) => {
       return dataSources.userAPI.getOTP(phone_number)
