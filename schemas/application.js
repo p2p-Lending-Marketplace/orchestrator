@@ -30,14 +30,14 @@ const applicationTypeDef = gql`
   type Application {
     _id: ID!
     user_id: User
-    fintech_id: ID!
+    fintech_id: Fintech
     amount: Int
-    logoURL: String!
-    company_name: String
     loan_term: Int
     objective: String
     decision: String
+    additional_data: String
     createdAt: String
+    updatedAt: String
     status: String
   }
 `
@@ -62,7 +62,6 @@ const applicationResolvers = {
       return dataSources.applicationAPI.addNewApplication(args)
     },
     updateApplicationDecision: async (_source, args, { dataSources }) => {
-      console.log('testttttt')
       return dataSources.applicationAPI.updateApplicationDecision(args)
     },
   },
