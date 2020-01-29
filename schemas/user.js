@@ -12,7 +12,7 @@ const userTypeDef = gql`
   }
 
   extend type Mutation {
-    addNewUser(phone_number: String!, pin: String!): User
+    addNewUser(phone_number: String!, pin: String!): token
 
     updateUserData(
       id: ID!
@@ -34,6 +34,8 @@ const userTypeDef = gql`
 
     registerPushNotification(token: String!, phone_number: String!): User
   }
+
+  scalar token
 
   type User {
     _id: ID
