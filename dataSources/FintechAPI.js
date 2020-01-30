@@ -7,7 +7,6 @@ class FintechAPI extends RESTDataSource {
   }
 
   async getAllFinteches() {
-    console.log('datasources')
     return this.get('/')
   }
 
@@ -24,17 +23,23 @@ class FintechAPI extends RESTDataSource {
     min_interest,
     max_interest,
     logoURL,
+    total_application,
+    avg_credit_score,
+    percent_acceptance,
   }) {
     return this.post(
       `/`,
       {
-        company_name: company_name,
-        description: description,
-        min_interest: min_interest,
-        max_interest: max_interest,
-        logoURL: logoURL,
+        company_name,
+        description,
+        min_interest,
+        max_interest,
+        logoURL,
         username,
         password,
+        total_application,
+        avg_credit_score,
+        percent_acceptance,
       },
       { headers: { token } }
     )
@@ -50,17 +55,23 @@ class FintechAPI extends RESTDataSource {
     min_interest,
     max_interest,
     logoURL,
+    total_application,
+    avg_credit_score,
+    percent_acceptance,
   }) {
     return this.patch(
       `/${id}`,
       {
-        company_name: company_name,
-        description: description,
-        min_interest: min_interest,
-        max_interest: max_interest,
-        logoURL: logoURL,
+        company_name,
+        description,
+        min_interest,
+        max_interest,
+        logoURL,
         username,
         password,
+        total_application,
+        avg_credit_score,
+        percent_acceptance,
       },
       { headers: { token } }
     )

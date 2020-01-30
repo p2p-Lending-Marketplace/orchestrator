@@ -16,6 +16,9 @@ const fintechTypeDef = gql`
       min_interest: Float
       max_interest: Float
       logoURL: String
+      total_application: Int
+      avg_credit_score: String
+      percent_acceptance: Float
     ): Fintech
 
     updateFintechData(
@@ -28,6 +31,9 @@ const fintechTypeDef = gql`
       min_interest: Float
       max_interest: Float
       logoURL: String
+      total_application: Int
+      avg_credit_score: String
+      percent_acceptance: Float
     ): Fintech
   }
 
@@ -41,6 +47,9 @@ const fintechTypeDef = gql`
     min_interest: Float
     max_interest: Float
     logoURL: String
+    total_application: Int
+    avg_credit_score: String
+    percent_acceptance: Float
   }
 `
 

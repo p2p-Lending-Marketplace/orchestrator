@@ -30,6 +30,7 @@ const userTypeDef = gql`
       date_of_birth: String
       place_of_birth: String
       token: String
+      existing_loan_installment: Int
     ): User
 
     registerPushNotification(token: String!, phone_number: String!): User
@@ -63,6 +64,7 @@ const userTypeDef = gql`
     data_completed: Boolean
     status: Boolean
     score: String
+    existing_loan_installment: Int
   }
 `
 const userResolvers = {
