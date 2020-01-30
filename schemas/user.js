@@ -8,7 +8,7 @@ const userTypeDef = gql`
     verifyOTP(token: String!, phone_number: String!): User
     signInUser(phone_number: String!, pin: String!): User
     checkPhoneNumber(phone_number: String!): User
-    getUserScoring(token: String!): User
+    getUserScoring(token: String!): score
   }
 
   extend type Mutation {
@@ -35,7 +35,13 @@ const userTypeDef = gql`
     registerPushNotification(token: String!, phone_number: String!): User
   }
 
-  scalar token
+  type token {
+    token: String
+  }
+
+  type score {
+    score: String
+  }
 
   type User {
     _id: ID
