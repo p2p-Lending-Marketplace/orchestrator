@@ -55,7 +55,6 @@ class ApplicationAPI extends RESTDataSource {
       },
       { headers: { token } }
     )
-    console.log(application)
 
     await this.post(
       '/sendpush',
@@ -67,6 +66,20 @@ class ApplicationAPI extends RESTDataSource {
       { headers: { token } }
     )
     return application
+  }
+
+  async updateApplicationStatus({token, id, status}) {
+    await this.patch(
+      `/:${id}/status`,
+      {
+        status
+      },
+      {
+        headers: {
+          token   
+        }
+      }
+    )
   }
 }
 

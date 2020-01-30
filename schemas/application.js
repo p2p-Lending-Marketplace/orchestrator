@@ -25,6 +25,12 @@ const applicationTypeDef = gql`
       loan_term: Int
       decision: String
     ): Application
+
+    updateApplicationStatus(
+      token: String!,
+      id: ID!,
+      status: String!
+    ): Application
   }
 
   type Application {
@@ -64,6 +70,9 @@ const applicationResolvers = {
     updateApplicationDecision: async (_source, args, { dataSources }) => {
       return dataSources.applicationAPI.updateApplicationDecision(args)
     },
+    updateApplicationStatus: async (_source, args, { dataSources }) => {
+      return dataSources.applicationAPI.updateApplicationStatus(args)
+    }
   },
 }
 
