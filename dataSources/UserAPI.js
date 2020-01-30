@@ -77,7 +77,6 @@ class UserAPI extends RESTDataSource {
   }
 
   async updateUserData(data) {
-    console.log(data)
     return this.patch(`/`, data, {
       headers: {
         token: data.token,
