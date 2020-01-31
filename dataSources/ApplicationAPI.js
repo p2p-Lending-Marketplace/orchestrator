@@ -3,7 +3,7 @@ const { RESTDataSource } = require('apollo-datasource-rest')
 class ApplicationAPI extends RESTDataSource {
   constructor() {
     super()
-    this.baseURL = 'http://localhost:3000/application' // update baseURL
+    this.baseURL = 'http://34.87.75.195/application' // update baseURL
   }
 
   async getOneApplication({ id, token }) {

@@ -3,7 +3,7 @@ const { RESTDataSource } = require('apollo-datasource-rest')
 class UserAPI extends RESTDataSource {
   constructor() {
     super()
-    this.baseURL = 'http://localhost:3000/user' // update baseURL
+    this.baseURL = 'http://34.87.75.195/user' // update baseURL
   }
 
   async registerPushNotification(data) {
