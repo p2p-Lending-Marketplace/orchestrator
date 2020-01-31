@@ -49,4 +49,5 @@ const server = new ApolloServer({
   }),
 })
 
-server.listen().then(({ url }) => console.log('listening to', url))
+const port = process.env === 'production' ? 80 : 4000
+server.listen({ port }).then(({ url }) => console.log('listening to', url))
