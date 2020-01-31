@@ -30,7 +30,7 @@ const applicationTypeDef = gql`
       token: String!,
       id: ID!,
       status: String!
-    ): Application
+    ): [Application]
   }
 
   type Application {

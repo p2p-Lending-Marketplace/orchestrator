@@ -56,6 +56,8 @@ class ApplicationAPI extends RESTDataSource {
       { headers: { token } }
     )
 
+    console.log('sampe sini')
+
     await this.post(
       '/sendpush',
       {
@@ -68,16 +70,16 @@ class ApplicationAPI extends RESTDataSource {
     return application
   }
 
-  async updateApplicationStatus({token, id, status}) {
+  async updateApplicationStatus({ token, id, status }) {
     await this.patch(
-      `/:${id}/status`,
+      `/${id}/status`,
       {
-        status
+        status,
       },
       {
         headers: {
-          token   
-        }
+          token,
+        },
       }
     )
   }
